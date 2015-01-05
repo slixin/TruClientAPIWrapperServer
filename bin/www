@@ -1,0 +1,19 @@
+#!/usr/bin/env node
+var debug = require('debug')('TruClientAPIWrapperServer');
+var app = require('../app');
+
+app.set('port', 7001);
+
+var server = app.listen(app.get('port'), function() {
+  debug('Express server listening on port ' + server.address().port);
+});
+var io = require('socket.io').listen(server,{ log: false });
+
+io.sockets.on('connection', function(socket) {	
+	socket.on('addclient', function(data) {		
+		app.set('socket', socket);
+		console.log('Connected with TruClient');
+	});
+});
+
+global.listen_results = [];

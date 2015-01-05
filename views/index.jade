@@ -1,0 +1,6 @@
+extends layout
+
+block content
+  h1= title
+  for item in items
+    li #{item.url} - [#{item.description}]
